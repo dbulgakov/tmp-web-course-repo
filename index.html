@@ -150,5 +150,40 @@
 <div class="footer">
     <p>&copy; 2023 Університет митної справи та фінансів | <a href="http://umsf.dp.ua" style="color: white;">umsf.dp.ua</a></p>
 </div>
+<script>
+    function startTraverse() {
+        try {
+            const rootElement = document.querySelector('.container');
+                setTimeout(function() {
+                navigateDOM(rootElement, 0);
+            }, 1000);
+        }
+        catch{
+            return;
+        }
+    }
+
+    function navigateDOM(node, depth, callback) {
+      const content = node.childNodes[0]?.nodeValue?.trim() || '';
+      const nodeName = node.nodeName;
+      const children = node.children;
+      const answer = prompt(`[${depth}] Елемент: ${nodeName}\nВміст поточного вузла: "${content}"\nПродовжити? (так/ні)`, 'так') || "";
+      const normalizedAnswer = answer.toLowerCase().trim();
+      
+      if (normalizedAnswer === 'так') {
+        for (let i = 0; i < children.length; i++) {
+            navigateDOM(children[i], depth + 1, callback);
+        }
+      } else if (normalizedAnswer === 'ні') {
+        alert('Завершення роботи.');
+        throw new Error();
+      } else {
+        alert('Введено неприпустиму відповідь. Завершення роботи.');
+        throw new Error();
+      }
+    }
+
+    startTraverse();
+</script>
 </body>
 </html>
